@@ -26,13 +26,15 @@
     texte = texte.split("").reverse().join("");
   }
 
-  $: prenomV = prenom.toUpperCase();
+  $: prenomV = data.prenom.toUpperCase();
   function changePrenom() {
-    prenom = prenom === "Gonzague" ? "Dominique" : "Gonzague";
+    data.prenom = data.prenom === "Gonzague" ? "Dominique" : "Gonzague";
   }
-  let prenom = "",
-    nom = "",
-    age = "";
+  let data = {
+    prenom: "",
+    nom: "",
+    age: "",
+  };
 </script>
 
 <main>
@@ -46,16 +48,22 @@
     <button on:click={(e) => incrementer(e, cont)}
       >Par {cont} = {compteur}</button
     >
-    <img {src} alt={logo} width={taille} on:click={changeImg} />
+    <img
+      {src}
+      alt={logo}
+      width={taille}
+      on:keydown={changeImg}
+      on:click={changeImg}
+    />
   </div>
   <hr />
   <p class="texte"><button on:click={inverser}>Inverser</button>{texte}</p>
-  <h1 on:click={changePrenom}>{prenomV}</h1>
-  <input type="text" placeholder="Prenom ?" id="prenom" bind:value={prenom} />
-  <input type="text" placeholder="Nom ?" id="nom" bind:value={nom} />
-  <input type="number" placeholder="Age ?" id="age" bind:value={age} />
-
-  <Fiche {nom} {prenomV} {age} />
+  <h1 on:keydown={changePrenom} on:click={changePrenom}>{prenomV}</h1>
+  <input type="text" placeholder="Prenom ?" id="prenom" bind:value={data.prenom} />
+  <input type="text" placeholder="Nom ?" id="nom" bind:value={data.nom} />
+  <input type="number" placeholder="Age ?" id="age" bind:value={data.age} />
+<!-- passage d'un objet Json : data -->
+  <Fiche {...data} />
   <p>
     Check out <a
       href="https://github.com/sveltejs/kit#readme"
@@ -73,7 +81,9 @@
   }
   img {
     height: auto;
+    cursor: pointer;
   }
+
   .texte {
     color: yellow;
     font-size: 2rem;
