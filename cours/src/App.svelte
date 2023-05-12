@@ -1,47 +1,68 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import { getContext } from "svelte";
+  import Counter from "./lib/Counter.svelte";
+  import Decounter from "./lib/Decounter.svelte";
+  
+  let logo = "logo de svelte";
+  let taille = 200;
+  let url = "https://www.google.com";
+  let urlImg1='https://images.unsplash.com/photo-1683802175943-c71b4bd66c54?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2286&q=80'
+  let urlImg2 ='https://images.unsplash.com/photo-1682685797208-c741d58c2eff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80'
+  let src= urlImg1
+  let lien = "Google";
+  let compteur = 0;
+  let cont = -2;
+  function incrementer(e, step = 1) {
+    compteur += step;
+  }
+  function changeImg() {
+    src =
+      src === urlImg1
+        ? urlImg2
+        : urlImg1
+        
+  }
+  let texte = "un beau texte à inverser";
+  function inverser(){
+    texte = texte.split("").reverse().join("")
+  }
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
-
+  <h1>Mes essais</h1>
   <div class="card">
-    <Counter />
+    <Counter /><Decounter />
   </div>
-
+  <hr />
+  <div class="container">
+    <h1><a href={url} target="-blank">{lien}</a></h1>
+    <button on:click={(e) => incrementer(e, cont)}
+      >Par {cont} = {compteur}</button
+    >
+    <img {src} alt={logo} width={taille} on:click={changeImg} />
+  </div>
+  <hr />
+  <p class='texte'><button on:click={inverser}>Inverser</button>{texte}</p>
   <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
+    Check out <a
+      href="https://github.com/sveltejs/kit#readme"
+      target="_blank"
+      rel="noreferrer">SvelteKit</a
+    >, the official Svelte app framework powered by Vite!
   </p>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  .container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+  img {
+    height:auto;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+.texte{
+  color:yellow;
+  font-size: 2rem;
+}
 </style>
